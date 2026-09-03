@@ -8,7 +8,7 @@
 > 🚀 **Current Release: RAGarator V1.0**
 >
 > RAGarator V1.0 is the first deployed version of the platform. It provides document ingestion, four chunking strategies, benchmarking, explainable scoring, confidence estimation, and strategy recommendations.
-
+```
 ## 🌐 Live Demo
 
 RAGarator V1.0 is officially deployed and available online.
