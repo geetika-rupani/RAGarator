@@ -1,0 +1,32 @@
+Retrieval-Augmented Generation for Technical Reports
+
+Abstract
+Retrieval-augmented generation (RAG) combines a parametric language model with a non-parametric document store. The quality of the retrieved context depends heavily on how source documents are segmented. This report compares four practical chunking strategies on long-form technical writing and explains how chunk length, overlap, and boundary choice affect answer recall.
+
+1. Introduction
+Large language models can hallucinate citations when they are not grounded in a source corpus. RAG systems reduce that risk by embedding document chunks and retrieving the most similar passages for a user query. If chunks are too small, an answer span is split across windows and cosine similarity drops. If chunks are too large, the retriever returns mixed topics and the generator wastes context on irrelevant sentences.
+
+A 2024 internal evaluation on 48 policy memos found that recursive splitting raised Top-1 lexical similarity from 0.31 to 0.39 versus fixed 512-character windows. Sentence packing performed best on FAQ-style pages where each paragraph already contained a complete claim.
+
+2. Chunking Strategies
+Fixed-size chunking slices a document into overlapping character windows. It is simple and fast, but it frequently cuts a definition in half. Recursive chunking first splits on headings and paragraphs, then on sentences, then on spaces. That preserves more discourse structure in reports that already use headings such as Methods and Results.
+
+Sentence-based chunking groups complete sentences until a character budget is reached. It avoids mid-sentence cuts and is strong when sentences average 90 to 160 characters. Token-based chunking uses word-like tokens rather than characters, which keeps windows stable across languages that use long compound words.
+
+3. Methods
+Each strategy was evaluated with grounded queries taken from high-information sentences in the source text. Gold excerpts were the original sentences, not synthetic labels. Retrieval used TF-IDF unigrams and bigrams with cosine similarity. Metrics included average Top-1 similarity, average Top-3 similarity, gold-span hit rate, mean reciprocal rank, chunk-size suitability, length consistency, and processing time.
+
+The target chunk band for this class of documents was 220 to 800 characters. Windows shorter than 80 characters rarely contained a complete evidence span. Windows longer than 1400 characters mixed multiple claims and reduced precision.
+
+4. Results
+Recursive chunking produced 11 chunks averaging 154 characters on a short memo and 28 chunks averaging 410 characters on a 12-page specification. Fixed-size windows showed lower length variance but more often missed gold spans that crossed a window boundary. Sentence packing recovered 7 of 8 gold excerpts on the FAQ corpus. Token windows of 128 tokens with 20-token overlap were the most efficient on hardware with limited memory, completing retrieval in 12 milliseconds for 40 chunks.
+
+On documents with many headings, recursive splitting improved adjacent-chunk coherence because paragraph boundaries aligned with section topics. On documents with almost no paragraph structure, recursive splitting collapsed toward sentence splitting and the ranking margin fell below 0.02.
+
+5. Discussion
+No single strategy dominates every document. Recommendation confidence should not equal the winning score. A 0.01 gap between recursive and sentence packing is not decisive, especially when only four benchmark queries can be generated from a short file. Confidence should shrink when the document has fewer than 800 characters, when Top-1 similarity stays below 0.18, or when the weighted ranking disagrees with raw retrieval ranking.
+
+Practitioners should treat the recommendation as document-specific evidence: report the actual Top-1 values, the average chunk length, and at least one retrieved span that contains the gold excerpt.
+
+6. Conclusion
+Chunking is a retrieval design choice, not a preprocessing detail. For structured technical reports, recursive splitting is often the strongest default. For short narrative notes, sentence packing is usually safer. Fixed windows remain a useful baseline because they are cheap to compute. Token windows help when character counts are a poor proxy for semantic mass. A transparent multi-factor score, a margin-aware confidence estimate, and document-grounded explanations make that choice auditable.
