@@ -88,7 +88,7 @@ const FONTS = (
         }
    ======================================================================== */
 
-const API_BASE_URL = "/api";
+const API_BASE_URL = "https://ragarator-api.onrender.com/api";
 const USE_MOCK_API = false;
 
 const STAGE_META = {
