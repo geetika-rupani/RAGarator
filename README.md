@@ -291,72 +291,50 @@ Human-Readable Explanation
 ## Backend Architecture
 
 ```
+
 backend/
-│
 ├── app/
+│   ├── main.py                 # FastAPI application entry point
+│   ├── config.py               # Application configuration
 │   │
 │   ├── api/
-│   │   ├── analyze.py          # Document analysis endpoint
 │   │   ├── health.py           # Health check endpoint
-│   │   └── upload.py           # File upload endpoint
+│   │   ├── upload.py           # File upload endpoint
+│   │   └── analyze.py          # Document analysis endpoint
 │   │
 │   ├── models/
 │   │   └── schemas.py          # Pydantic request/response models
 │   │
 │   ├── services/
-│   │   ├── ingestion/
-│   │   │   ├── loaders.py      # PDF/DOCX/TXT loading
-│   │   │   ├── cleaner.py      # Text cleaning
-│   │   │   └── metadata.py     # Document metadata extraction
-│   │   │
-│   │   ├── chunkers/
-│   │   │   ├── base.py         # Base chunker interface
-│   │   │   ├── fixed.py        # Fixed-size chunking
-│   │   │   ├── recursive.py    # Recursive chunking
-│   │   │   ├── sentence.py     # Sentence chunking
-│   │   │   ├── token.py        # Token-based chunking
-│   │   │   └── manager.py      # Chunking strategy orchestration
-│   │   │
-│   │   ├── embeddings/
-│   │   │   └── embedder.py     # Embedding generation
-│   │   │
-│   │   ├── retrieval/
-│   │   │   ├── retriever.py    # Semantic retrieval
-│   │   │   └── evaluator.py    # Retrieval evaluation
-│   │   │
-│   │   ├── evaluation/
-│   │   │   ├── chunk_quality.py
-│   │   │   ├── consistency.py
-│   │   │   ├── efficiency.py
-│   │   │   ├── quality.py
-│   │   │   └── retrieval_quality.py
-│   │   │
-│   │   ├── benchmark/
-│   │   │   ├── evaluator.py
-│   │   │   ├── metrics.py
-│   │   │   └── queries.py
-│   │   │
-│   │   ├── decision/
-│   │   │   ├── scoring.py
-│   │   │   ├── confidence.py
-│   │   │   ├── explanation.py
-│   │   │   ├── recommendation.py
-│   │   │   └── dashboard.py
-│   │   │
-│   │   ├── jobs/
-│   │   │   ├── runner.py
-│   │   │   └── store.py
-│   │   │
-│   │   └── pipeline/
-│   │       └── analyzer.py     # Complete analysis pipeline
+│   │   ├── ingestion/          # Loaders, cleaner, metadata
+│   │   ├── chunkers/           # Fixed, recursive, sentence, token, manager
+│   │   ├── embeddings/         # Embedder
+│   │   ├── retrieval/          # Retriever, evaluator
+│   │   ├── evaluation/         # Quality, consistency, efficiency
+│   │   ├── decision/           # Scoring, confidence, explanation, recommendation
+│   │   ├── benchmark/          # Queries, metrics, evaluator
+│   │   ├── jobs/                # Async analyze jobs for the UI
+│   │   └── pipeline/            # analyzer.py — complete analysis pipeline
 │   │
-│   ├── config.py               # Application configuration
-│   └── main.py                 # FastAPI application entry point
+│   └── utils/
 │
-├── tests/                      # Backend tests
-├── uploads/                    # Uploaded documents
-├── requirements.txt
-└── pytest.ini
+└── tests/                       # Backend tests
+
+frontend/
+├── package.json
+├── vite.config.js
+├── index.html
+├── public/
+│   └── sample.txt
+└── src/
+    ├── main.jsx
+    ├── RAGarator.jsx
+    └── index.css
+
+samples/
+└── rag_methods.txt
+
+start.sh
 ```
 
 ### Frontend
