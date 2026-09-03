@@ -4,6 +4,21 @@
 
 **AI-Powered RAG Chunking Strategy Benchmarking Platform**
 
+```markdown
+> 🚀 **Current Release: RAGarator V1.0**
+>
+> RAGarator V1.0 is the first deployed version of the platform. It provides document ingestion, four chunking strategies, benchmarking, explainable scoring, confidence estimation, and strategy recommendations.
+
+## 🌐 Live Demo
+
+RAGarator V1.0 is officially deployed and available online.
+
+- **Frontend:** https://ra-garator.vercel.app
+- **Backend API:** https://ragarator-api.onrender.com
+- **API Documentation (Swagger):** https://ragarator-api.onrender.com/docs
+
+> The frontend is deployed on Vercel, while the FastAPI backend is deployed on Render.
+
 *Version 1.0 — Initial Working Release*
 
 [![Python](https://img.shields.io/badge/Python-3.11-blue.svg)](https://www.python.org/)
@@ -375,6 +390,45 @@ The frontend lets users:
 11. Explainable result generation
 
 ---
+
+## ☁️ Deployment Architecture
+
+```text
+User
+ │
+ ▼
+Vercel
+React + Vite Frontend
+https://ra-garator.vercel.app
+ │
+ │ API Requests
+ ▼
+Render
+FastAPI Backend
+https://ragarator-api.onrender.com
+ │
+ ▼
+RAGarator Analysis Pipeline
+ │
+ ├── Document Ingestion
+ ├── Text Cleaning
+ ├── Chunking Strategies
+ │    ├── Fixed-size
+ │    ├── Recursive
+ │    ├── Sentence-based
+ │    └── Token-based
+ │
+ ├── Embedding Generation
+ ├── Retrieval Evaluation
+ ├── Quality Evaluation
+ ├── Consistency Evaluation
+ ├── Efficiency Evaluation
+ │
+ ▼
+Decision Engine
+ │
+ ▼
+Recommended Chunking Strategy
 
 ## Tech Stack
 
