@@ -1,76 +1,111 @@
-RAGarator V1
-AI-Powered RAG Chunking Strategy Benchmarking Platform
+<div align="center">
 
-Version 1.0 — Initial Working Release
+# 🧩 RAGarator V1
 
-RAGarator V1 is the first implementation of an AI-powered benchmarking platform designed to determine the most suitable document chunking strategy for Retrieval-Augmented Generation (RAG) systems.
+**AI-Powered RAG Chunking Strategy Benchmarking Platform**
 
-The core idea behind RAGarator is that there is no universally optimal chunking strategy. Different documents have different structures, semantic densities, lengths, and retrieval requirements. A chunking strategy that performs well for one document may perform poorly for another.
+*Version 1.0 — Initial Working Release*
 
-RAGarator addresses this problem by analyzing a document using multiple chunking strategies, evaluating them across several dimensions, benchmarking retrieval performance, and recommending the most suitable strategy with a confidence score and document-specific explanation.
+[![Python](https://img.shields.io/badge/Python-3.11-blue.svg)](https://www.python.org/)
+[![FastAPI](https://img.shields.io/badge/FastAPI-Backend-009688.svg)](https://fastapi.tiangolo.com/)
+[![React](https://img.shields.io/badge/React-Frontend-61DAFB.svg)](https://react.dev/)
+[![Status](https://img.shields.io/badge/Status-Active%20Development-yellow.svg)]()
+[![License](https://img.shields.io/badge/License-Educational%2FResearch-lightgrey.svg)]()
 
-Table of Contents
-Problem Statement
-Version 1 Scope
-How RAGarator Works
-Key Features
-Supported Chunking Strategies
-Evaluation Framework
-Decision Engine
-Backend Architecture
-API Endpoints
-Tech Stack
-Running Locally
-Testing
-Future Versions
-Author
-Problem Statement
+</div>
 
-Chunking is one of the most critical components of a Retrieval-Augmented Generation (RAG) pipeline.
+---
 
-Documents must be divided into smaller chunks before they can be embedded and retrieved. However, selecting an inappropriate chunking strategy can significantly affect the performance of the entire RAG system.
+RAGarator is a platform that answers one question for any document you throw at it:
 
-Different chunking strategies influence:
+> **Which chunking strategy is most suitable for *this specific document*, and why?**
 
-Semantic context preservation
-Retrieval accuracy
-Information redundancy
-Embedding efficiency
-Retrieval latency
-Context fragmentation
-Overall RAG response quality
+Retrieval-Augmented Generation (RAG) pipelines live or die by how documents get chunked before embedding. There's no single "best" chunking strategy — a technique that works beautifully on a research paper can fall apart on a legal contract or a plain-text log file. RAGarator removes the guesswork: it runs a document through multiple chunking strategies, benchmarks each one on real retrieval performance, and recommends a winner with a confidence score and a plain-English explanation.
 
-Currently, developers often manually select chunking strategies based on assumptions or general best practices.
+---
 
-RAGarator aims to make this decision more systematic and document-aware.
+## Table of Contents
 
-Instead of assuming that one strategy is always better, RAGarator evaluates multiple strategies on the actual document and recommends the most suitable one based on measurable evidence.
+- [🧩 RAGarator V1](#-ragarator-v1)
+  - [Table of Contents](#table-of-contents)
+  - [Problem Statement](#problem-statement)
+  - [Version 1 Scope](#version-1-scope)
+  - [How RAGarator Works](#how-ragarator-works)
+  - [Key Features](#key-features)
+    - [📄 Document Analysis](#-document-analysis)
+    - [🔀 Multiple Chunking Strategies](#-multiple-chunking-strategies)
+    - [📊 Chunk Quality Evaluation](#-chunk-quality-evaluation)
+    - [🔍 Retrieval Benchmarking](#-retrieval-benchmarking)
+    - [💡 Explainable Recommendations](#-explainable-recommendations)
+  - [Supported Chunking Strategies](#supported-chunking-strategies)
+    - [1. Fixed Chunking](#1-fixed-chunking)
+    - [2. Recursive Chunking](#2-recursive-chunking)
+    - [3. Sentence-Based Chunking](#3-sentence-based-chunking)
+    - [4. Token-Based Chunking](#4-token-based-chunking)
+  - [Evaluation Framework](#evaluation-framework)
+    - [Benchmarking Pipeline](#benchmarking-pipeline)
+  - [Decision Engine](#decision-engine)
+  - [Backend Architecture](#backend-architecture)
+    - [Frontend](#frontend)
+  - [API Endpoints](#api-endpoints)
+  - [Tech Stack](#tech-stack)
+  - [Running Locally](#running-locally)
+    - [Clone the repository](#clone-the-repository)
+    - [Backend setup](#backend-setup)
+    - [Frontend setup](#frontend-setup)
+  - [Testing](#testing)
+  - [RAGarator V1 Limitations](#ragarator-v1-limitations)
+  - [Future Versions](#future-versions)
+    - [🚀 RAGarator V2 — Advanced Intelligence and Optimization](#-ragarator-v2--advanced-intelligence-and-optimization)
+    - [🏗️ RAGarator V3 — Production RAG Integration](#️-ragarator-v3--production-rag-integration)
+    - [🧠 RAGarator V4 — Intelligent Adaptive Chunking](#-ragarator-v4--intelligent-adaptive-chunking)
+  - [Long-Term Vision](#long-term-vision)
+  - [Project Status](#project-status)
+  - [Author](#author)
+  - [License](#license)
 
-Version 1 Scope
+---
 
-RAGarator V1 focuses on establishing and validating the core intelligence and decision engine of the platform.
+## Problem Statement
 
-The current version includes:
+Chunking is one of the most critical — and most underrated — components of a RAG pipeline. Documents must be split into smaller pieces before they can be embedded and retrieved, and the strategy used to split them has a direct impact on:
 
-Document ingestion and preprocessing
-Support for PDF, DOCX, and TXT files
-Multiple chunking strategies
-Embedding generation
-Semantic retrieval evaluation
-Chunk quality evaluation
-Benchmark query generation
-Strategy scoring and ranking
-Confidence estimation
-Explainable recommendations
-Document-specific reasoning
-REST API using FastAPI
-React-based frontend interface
+- Semantic context preservation
+- Retrieval accuracy
+- Information redundancy
+- Embedding efficiency
+- Retrieval latency
+- Context fragmentation
+- Overall RAG response quality
 
-The primary goal of Version 1 is to build a reliable and explainable engine capable of answering the question:
+Today, most developers pick a chunking strategy based on intuition or general best practices, then move on. RAGarator makes that decision **systematic and document-aware** — evaluating multiple strategies on the actual document instead of assuming one is universally better.
 
-Which chunking strategy is most suitable for this specific document, and why?
+---
 
-How RAGarator Works
+## Version 1 Scope
+
+RAGarator V1 focuses on building and validating the core intelligence and decision engine of the platform.
+
+| Area | Included in V1 |
+|---|---|
+| Document ingestion & preprocessing | ✅ |
+| File support | PDF, DOCX, TXT |
+| Chunking strategies | Fixed, Recursive, Sentence-based, Token-based |
+| Embedding generation | ✅ |
+| Semantic retrieval evaluation | ✅ |
+| Chunk quality evaluation | ✅ |
+| Benchmark query generation | ✅ |
+| Strategy scoring & ranking | ✅ |
+| Confidence estimation | ✅ |
+| Explainable, document-specific recommendations | ✅ |
+| REST API | FastAPI |
+| Frontend | React |
+
+---
+
+## How RAGarator Works
+
+```
 Document Upload
       │
       ▼
@@ -112,154 +147,86 @@ Final Recommendation
       │
       ▼
 Document-Specific Explanation
-Key Features
-Document Analysis
+```
 
-RAGarator supports the analysis of:
+---
 
-PDF documents
-DOCX documents
-TXT files
+## Key Features
 
-Documents are loaded, cleaned, and processed before entering the chunking evaluation pipeline.
+### 📄 Document Analysis
+Supports **PDF**, **DOCX**, and **TXT** files. Documents are loaded, cleaned, and normalized before entering the chunking pipeline.
 
-Multiple Chunking Strategies
+### 🔀 Multiple Chunking Strategies
+Every document is run through several chunking strategies in parallel, under identical conditions, enabling direct, apples-to-apples comparison.
 
-Each document is processed using multiple chunking strategies rather than relying on a single predefined method.
+### 📊 Chunk Quality Evaluation
+Generated chunks are scored on:
+- Semantic quality
+- Structural consistency
+- Chunk size distribution
+- Context preservation
+- Efficiency
 
-This allows direct comparison of strategies under the same document conditions.
+### 🔍 Retrieval Benchmarking
+Each strategy's chunks are embedded, indexed, and tested against benchmark queries to measure real-world retrieval effectiveness — not just chunk structure in isolation.
 
-Chunk Quality Evaluation
+### 💡 Explainable Recommendations
+RAGarator doesn't just say *"Use Recursive Chunking."* It explains:
+- Why a strategy was selected
+- Which document characteristics drove the decision
+- How competing strategies performed
+- Which metrics contributed to the final score
+- How confident the system is in the recommendation
 
-Generated chunks are evaluated for characteristics such as:
+> **Example explanation:**
+> *"Recursive chunking was recommended because the document contains long structured sections with varying paragraph lengths. The strategy achieved stronger retrieval performance while preserving more contextual continuity than fixed-size chunking."*
 
-Semantic quality
-Structural consistency
-Chunk size distribution
-Context preservation
-Efficiency
-Retrieval Benchmarking
+---
 
-RAGarator evaluates how effectively chunks support semantic retrieval.
+## Supported Chunking Strategies
 
-The retrieval system uses embeddings and benchmark queries to measure whether relevant information can be retrieved effectively.
-
-Explainable Recommendations
-
-The system does not simply return:
-
-"Use Recursive Chunking."
-
-Instead, it aims to explain:
-
-Why a strategy was selected
-Which document characteristics influenced the decision
-How competing strategies performed
-Which metrics contributed to the final score
-How confident the system is in the recommendation
-Supported Chunking Strategies
-1. Fixed Chunking
-
+### 1. Fixed Chunking
 Splits documents into chunks of a predefined size.
 
-Advantages
-Simple implementation
-Predictable chunk sizes
-Computationally efficient
-Suitable For
-Uniform documents
-Structured data
-Documents with consistent formatting
-2. Recursive Chunking
+- **Advantages:** simple, predictable chunk sizes, computationally efficient
+- **Best for:** uniform documents, structured data, consistently formatted text
 
-Recursively splits documents using hierarchical separators such as:
+### 2. Recursive Chunking
+Recursively splits documents using hierarchical separators — paragraphs → sections → sentences → words.
 
-Paragraphs
-Sections
-Sentences
-Words
-Advantages
-Better context preservation
-Adapts to document structure
-Handles long-form text effectively
-Suitable For
-Research papers
-Technical documentation
-Long-form content
-Structured documents
-3. Sentence-Based Chunking
+- **Advantages:** better context preservation, adapts to document structure, handles long-form text well
+- **Best for:** research papers, technical documentation, long-form content, structured documents
 
+### 3. Sentence-Based Chunking
 Groups complete sentences into chunks.
 
-Advantages
-Preserves sentence boundaries
-Reduces context fragmentation
-Maintains natural language structure
-Suitable For
-Articles
-Reports
-Narrative documents
-Educational content
-4. Token-Based Chunking
+- **Advantages:** preserves sentence boundaries, reduces context fragmentation, maintains natural language flow
+- **Best for:** articles, reports, narrative documents, educational content
 
+### 4. Token-Based Chunking
 Splits text according to token limits.
 
-Advantages
-Compatible with LLM context limits
-Token-aware processing
-Useful for production RAG systems
-Suitable For
-LLM-based applications
-Context-window optimization
-Token-sensitive pipelines
-Evaluation Framework
+- **Advantages:** compatible with LLM context limits, token-aware, production-friendly
+- **Best for:** LLM-based applications, context-window optimization, token-sensitive pipelines
 
-RAGarator evaluates each chunking strategy across multiple dimensions.
+---
 
-Chunk Quality
+## Evaluation Framework
 
-Measures whether chunks preserve meaningful and coherent information.
+RAGarator scores each strategy across four dimensions:
 
-Factors may include:
+| Dimension | What it measures |
+|---|---|
+| **Chunk Quality** | Coherence, context preservation, semantic completeness, chunk structure |
+| **Consistency** | Chunk size variation, structural uniformity, distribution consistency |
+| **Efficiency** | Processing time, number of chunks generated, chunking overhead |
+| **Retrieval Quality** | Retrieval relevance, similarity scores, query-to-chunk matching, ranking quality |
 
-Chunk coherence
-Context preservation
-Semantic completeness
-Chunk structure
-Consistency
-
-Measures how stable the generated chunks are across the document.
-
-Factors include:
-
-Chunk size variation
-Structural uniformity
-Distribution consistency
-Efficiency
-
-Measures the computational characteristics of each strategy.
-
-Factors include:
-
-Processing time
-Number of chunks generated
-Chunking overhead
-Retrieval Quality
-
-Measures how effectively chunks support semantic retrieval.
-
-Factors include:
-
-Retrieval relevance
-Similarity scores
-Query-to-chunk matching performance
-Ranking quality
-Benchmarking System
-
-RAGarator generates or processes benchmark queries to evaluate retrieval performance.
+### Benchmarking Pipeline
 
 For each chunking strategy:
 
+```
 Strategy
    │
    ▼
@@ -279,15 +246,17 @@ Retrieve Relevant Chunks
    │
    ▼
 Calculate Retrieval Metrics
+```
 
-This allows chunking strategies to be compared based on retrieval behavior rather than chunk structure alone.
+This lets strategies be compared on **retrieval behavior**, not just chunk structure alone.
 
-Decision Engine
+---
 
-The Decision Engine is the core intelligence layer of RAGarator V1.
+## Decision Engine
 
-Instead of selecting a strategy based on a single metric, the system combines multiple evaluation signals.
+The Decision Engine is the core intelligence layer of RAGarator V1. Rather than optimizing for a single metric, it fuses multiple evaluation signals into one explainable recommendation.
 
+```
 Evaluation Metrics
        │
        ▼
@@ -307,36 +276,21 @@ Recommendation Generation
        │
        ▼
 Human-Readable Explanation
+```
 
-The decision engine produces:
+**Output includes:**
+- Recommended strategy
+- Ranked alternatives
+- Overall & per-metric scores
+- Confidence level
+- Reasoning behind the recommendation
+- Document-specific explanation
 
-Recommended strategy
-Ranked alternatives
-Overall scores
-Individual metric scores
-Confidence level
-Reasoning behind the recommendation
-Document-specific explanation
-Explainability
+---
 
-Explainability is an important component of RAGarator.
+## Backend Architecture
 
-A recommendation should not behave like a black box.
-
-The system is designed to provide explanations related to:
-
-The characteristics of the uploaded document
-The performance of each chunking strategy
-Relevant evaluation metrics
-Differences between the recommended and alternative strategies
-
-The objective is to provide meaningful reasoning instead of generic statements.
-
-Example:
-
-Recursive chunking was recommended because the document contains long structured sections with varying paragraph lengths. The strategy achieved stronger retrieval performance while preserving more contextual continuity than fixed-size chunking.
-
-Backend Architecture
+```
 backend/
 │
 ├── app/
@@ -350,12 +304,11 @@ backend/
 │   │   └── schemas.py          # Pydantic request/response models
 │   │
 │   ├── services/
-│   │
 │   │   ├── ingestion/
 │   │   │   ├── loaders.py      # PDF/DOCX/TXT loading
 │   │   │   ├── cleaner.py      # Text cleaning
 │   │   │   └── metadata.py     # Document metadata extraction
-│   │
+│   │   │
 │   │   ├── chunkers/
 │   │   │   ├── base.py         # Base chunker interface
 │   │   │   ├── fixed.py        # Fixed-size chunking
@@ -363,7 +316,7 @@ backend/
 │   │   │   ├── sentence.py     # Sentence chunking
 │   │   │   ├── token.py        # Token-based chunking
 │   │   │   └── manager.py      # Chunking strategy orchestration
-│   │
+│   │   │
 │   │   ├── embeddings/
 │   │   │   └── embedder.py     # Embedding generation
 │   │   │
@@ -377,23 +330,23 @@ backend/
 │   │   │   ├── efficiency.py
 │   │   │   ├── quality.py
 │   │   │   └── retrieval_quality.py
-│   │
+│   │   │
 │   │   ├── benchmark/
 │   │   │   ├── evaluator.py
 │   │   │   ├── metrics.py
 │   │   │   └── queries.py
-│   │
+│   │   │
 │   │   ├── decision/
 │   │   │   ├── scoring.py
 │   │   │   ├── confidence.py
 │   │   │   ├── explanation.py
 │   │   │   ├── recommendation.py
 │   │   │   └── dashboard.py
-│   │
+│   │   │
 │   │   ├── jobs/
 │   │   │   ├── runner.py
 │   │   │   └── store.py
-│   │
+│   │   │
 │   │   └── pipeline/
 │   │       └── analyzer.py     # Complete analysis pipeline
 │   │
@@ -404,235 +357,230 @@ backend/
 ├── uploads/                    # Uploaded documents
 ├── requirements.txt
 └── pytest.ini
-Frontend
+```
 
-The frontend provides an interface for users to:
+### Frontend
 
-Upload a document
-Submit it for analysis
-View the recommended chunking strategy
-Compare strategy scores
-Understand confidence levels
-View explanations and evaluation results
-Frontend Stack
-React
-Vite
-Tailwind CSS
-API Endpoints
-Health Check
-GET /health
+The frontend lets users:
 
-Checks whether the backend service is running.
+- Upload a document
+- Submit it for analysis
+- View the recommended chunking strategy
+- Compare strategy scores
+- Understand confidence levels
+- View explanations and evaluation results
 
-Upload Document
-POST /upload
+**Frontend stack:** React · Vite · Tailwind CSS
 
-Uploads a supported document for analysis.
+---
 
-Supported formats:
+## API Endpoints
 
-.pdf
-.docx
-.txt
-Analyze Document
-POST /analyze
+| Method | Endpoint | Description |
+|---|---|---|
+| `GET` | `/health` | Checks whether the backend service is running |
+| `POST` | `/upload` | Uploads a supported document (`.pdf`, `.docx`, `.txt`) for analysis |
+| `POST` | `/analyze` | Runs the complete RAGarator analysis pipeline |
 
-Runs the complete RAGarator analysis pipeline.
+**`POST /analyze` performs:**
 
-The pipeline performs:
+1. Document loading
+2. Text cleaning
+3. Metadata extraction
+4. Multiple chunking strategies
+5. Embedding generation
+6. Chunk quality evaluation
+7. Retrieval benchmarking
+8. Strategy scoring
+9. Confidence estimation
+10. Recommendation generation
+11. Explainable result generation
 
-Document loading
-Text cleaning
-Metadata extraction
-Multiple chunking strategies
-Embedding generation
-Chunk quality evaluation
-Retrieval benchmarking
-Strategy scoring
-Confidence estimation
-Recommendation generation
-Explainable result generation
-Tech Stack
-Backend
-Python
-FastAPI
-Pydantic
-Uvicorn
-Machine Learning and NLP
-Sentence Transformers
-PyTorch
-NumPy
-Scikit-learn
-Document Processing
-PyMuPDF
-python-docx
-Chunking
-LangChain Text Splitters
-Frontend
-React
-Vite
-Tailwind CSS
-Running Locally
-Clone the Repository
+---
+
+## Tech Stack
+
+<table>
+<tr>
+<td valign="top" width="33%">
+
+**Backend**
+- Python
+- FastAPI
+- Pydantic
+- Uvicorn
+
+</td>
+<td valign="top" width="33%">
+
+**ML & NLP**
+- Sentence Transformers
+- PyTorch
+- NumPy
+- Scikit-learn
+
+**Document Processing**
+- PyMuPDF
+- python-docx
+
+**Chunking**
+- LangChain Text Splitters
+
+</td>
+<td valign="top" width="33%">
+
+**Frontend**
+- React
+- Vite
+- Tailwind CSS
+
+</td>
+</tr>
+</table>
+
+---
+
+## Running Locally
+
+### Clone the repository
+
+```bash
 git clone https://github.com/geetika-rupani/RAGarator.git
 cd RAGarator
-Backend Setup
+```
 
-Navigate to the backend directory:
+### Backend setup
 
+```bash
 cd backend
 
-Create a virtual environment:
-
+# Create a virtual environment
 python3.11 -m venv .venv
 
-Activate it:
-
-macOS/Linux
+# Activate it (macOS/Linux)
 source .venv/bin/activate
 
-Install dependencies:
-
+# Install dependencies
 pip install -r requirements.txt
 
-Start the FastAPI server:
-
+# Start the FastAPI server
 uvicorn app.main:app --reload
+```
 
-Backend:
+- Backend: `http://localhost:8000`
+- Swagger API docs: `http://localhost:8000/docs`
 
-http://localhost:8000
+### Frontend setup
 
-Swagger API documentation:
+Open another terminal:
 
-http://localhost:8000/docs
-Frontend Setup
-
-Open another terminal and navigate to:
-
+```bash
 cd frontend
-
-Install dependencies:
-
 npm install
-
-Start the development server:
-
 npm run dev
+```
 
-The frontend will run at:
+- Frontend: `http://localhost:5173`
 
-http://localhost:5173
-Testing
+---
 
-Run backend tests from the backend directory:
+## Testing
 
+Run backend tests from the `backend` directory:
+
+```bash
 pytest
-RAGarator V1 Limitations
+```
 
-RAGarator V1 focuses primarily on building and validating the core chunking decision engine.
+---
 
-Version 1 is not intended to be the final architecture of the platform.
+## RAGarator V1 Limitations
 
-Current limitations may include:
+RAGarator V1 focuses on building and validating the core chunking decision engine. It is **not** intended to be the final architecture of the platform. Current limitations include:
 
-Limited number of chunking strategies
-Local embedding generation
-Limited benchmark datasets
-No persistent vector database integration
-Limited asynchronous processing
-Initial metric weighting and scoring logic
-Single-document focused analysis
+- Limited number of chunking strategies
+- Local embedding generation
+- Limited benchmark datasets
+- No persistent vector database integration
+- Limited asynchronous processing
+- Initial metric weighting and scoring logic
+- Single-document focused analysis
 
-These limitations provide opportunities for future versions of the project.
+These limitations set the roadmap for future versions.
 
-Future Versions
+---
 
-RAGarator is designed to evolve beyond Version 1.
+## Future Versions
 
-RAGarator V2 — Advanced Intelligence and Optimization
+### 🚀 RAGarator V2 — Advanced Intelligence and Optimization
+- Dynamic chunk size optimization
+- Automatic overlap optimization
+- Additional chunking strategies
+- Advanced semantic evaluation
+- Improved benchmark query generation
+- More sophisticated confidence estimation
+- Multi-document analysis
+- Improved visualization and comparison dashboards
 
-Potential improvements:
+### 🏗️ RAGarator V3 — Production RAG Integration
+- Vector database integration
+- FAISS integration
+- Pinecone or Weaviate support
+- End-to-end RAG pipeline testing
+- LLM-based retrieval evaluation
+- Automated RAG performance benchmarking
+- Real-world question-answering evaluation
 
-Dynamic chunk size optimization
-Automatic overlap optimization
-Additional chunking strategies
-Advanced semantic evaluation
-Improved benchmark query generation
-More sophisticated confidence estimation
-Multi-document analysis
-Improved visualization and comparison dashboards
-RAGarator V3 — Production RAG Integration
+### 🧠 RAGarator V4 — Intelligent Adaptive Chunking
+- Hybrid chunking strategies
+- Adaptive chunking based on document sections
+- Machine learning-based chunking strategy prediction
+- Reinforcement learning for chunk optimization
+- LLM-guided semantic chunking
+- Automatic chunk boundary detection
+- Domain-aware chunking strategies
 
-Potential improvements:
+The long-term objective is to move from **"Which existing chunking strategy should I use?"** toward **"How should this specific document be optimally chunked?"**
 
-Vector database integration
-FAISS integration
-Pinecone or Weaviate support
-End-to-end RAG pipeline testing
-LLM-based retrieval evaluation
-Automated RAG performance benchmarking
-Real-world question-answering evaluation
-RAGarator V4 — Intelligent Adaptive Chunking
+---
 
-Potential research directions:
+## Long-Term Vision
 
-Hybrid chunking strategies
-Adaptive chunking based on document sections
-Machine learning-based chunking strategy prediction
-Reinforcement learning for chunk optimization
-LLM-guided semantic chunking
-Automatic chunk boundary detection
-Domain-aware chunking strategies
+RAGarator aims to become an intelligent chunking optimization layer for RAG systems — treating chunking not as a static preprocessing step, but as something:
 
-The long-term objective is to move from:
+- **Adaptive**
+- **Data-driven**
+- **Explainable**
+- **Document-aware**
+- **Performance-oriented**
 
-"Which existing chunking strategy should I use?"
+Eventually, the platform could automatically determine a document's optimal chunking strategy, optimal chunk size, optimal overlap, section-specific chunking behavior, and retrieval configuration — turning chunking into a measurable, optimized component of RAG system design.
 
-towards:
+---
 
-"How should this specific document be optimally chunked?"
-Long-Term Vision
+## Project Status
 
-The long-term vision of RAGarator is to become an intelligent chunking optimization layer for RAG systems.
-
-Rather than treating chunking as a static preprocessing step, RAGarator aims to make it:
-
-Adaptive
-Data-driven
-Explainable
-Document-aware
-Performance-oriented
-
-The platform could eventually analyze a document and automatically determine:
-
-Optimal chunking strategy
-Optimal chunk size
-Optimal overlap
-Section-specific chunking behavior
-Retrieval configuration
-
-This would allow chunking to become an optimized and measurable component of RAG system design.
-
-Project Status
-Current Version: RAGarator V1
-Status: Active Development
-Core Decision Engine: Implemented
-Backend: FastAPI
-Frontend: React
-Deployment: In Progress
+| | |
+|---|---|
+| **Current Version** | RAGarator V1 |
+| **Status** | Active Development |
+| **Core Decision Engine** | Implemented |
+| **Backend** | FastAPI |
+| **Frontend** | React |
+| **Deployment** | In Progress |
 
 RAGarator V1 represents the first working implementation and foundation of the broader RAGarator platform.
 
-Author
+---
 
-Geetika Rupani
+## Author
 
-B.Tech — Information Technology
-Vellore Institute of Technology
+**Geetika Rupani**
+B.Tech — Information Technology, Vellore Institute of Technology
+GitHub: [@geetika-rupani](https://github.com/geetika-rupani)
 
-GitHub: @geetika-rupani
+---
 
-License
+## License
 
 This project is currently developed for educational, research, and portfolio purposes.
